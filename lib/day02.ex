@@ -1,4 +1,8 @@
 defmodule Day02 do
+  @moduledoc ~S"""
+  A solution to https://adventofcode.com/2024/day/2.
+  """
+
   @type level :: pos_integer()
   @type report :: [level()]
 
