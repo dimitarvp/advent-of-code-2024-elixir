@@ -8,6 +8,6 @@ defmodule AocTest do
   end
 
   test "Day 1, part 2" do
-    assert Day02.part_2() == 25_358_365
+    assert Day01.part_2() == 25_358_365
   end
 end
