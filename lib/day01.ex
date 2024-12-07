@@ -10,10 +10,7 @@ defmodule Day01 do
     line
     |> String.trim()
     |> String.split(~r/\s+/)
-    |> Enum.map(fn text ->
-      {number, ""} = Integer.parse(text)
-      number
-    end)
+    |> Enum.map(&String.to_integer/1)
     |> List.to_tuple()
   end
 
