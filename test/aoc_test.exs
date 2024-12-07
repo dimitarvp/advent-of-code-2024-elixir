@@ -16,6 +16,6 @@ defmodule AocTest do
   end
 
   test "Day 2, part 2" do
-    assert Day02.part_1() == 328
+    assert Day02.part_2() == 328
   end
 end
