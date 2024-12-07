@@ -1,21 +1,5 @@
-# Aoc
+# Advent of Code 2024, Elixir edition
 
-**TODO: Add description**
+These are all the solutions for [Advent of Code 2024](https://adventofcode.com/2024/), written in Elixir.
 
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `aoc` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:aoc, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/aoc>.
-
+Running `mix test` after cloning this repo should be enough to demonstrate that all the right answers are produced by my code -- the hardcoded values in the tests are taken directly from the AOC website. You have to have Erlang and Elixir installed and [mise](https://github.com/jdx/mise) is a great way of doing it. The tests check both against the smaller examples given in the AOC puzzle texts as well as the full puzzle inputs. Here and there are also some extra inputs of small size, just to make doubly sure.
