@@ -1,4 +1,8 @@
 defmodule Day01 do
+  @moduledoc ~S"""
+  A solution to https://adventofcode.com/2024/day/1.
+  """
+
   @type id :: non_neg_integer()
   @type pair :: {id(), id()}
   @type pairs :: [pair()]
