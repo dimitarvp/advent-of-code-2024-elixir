@@ -7,22 +7,6 @@ defmodule Day02 do
   @type distance :: integer()
   @type report :: [level()]
 
-  @spec parse_line(String.t()) :: report()
-  def parse_line(line) do
-    line
-    |> String.trim()
-    |> String.split(~r/\s+/)
-    |> Enum.map(&String.to_integer/1)
-  end
-
-  @spec parse_input(String.t()) :: [report()]
-  def parse_input(input) do
-    input
-    |> String.split("\n")
-    |> Enum.reject(fn line -> line == "" end)
-    |> Enum.map(&parse_line/1)
-  end
-
   @spec all_variants_with_one_element_removed(report()) :: [report()]
   def all_variants_with_one_element_removed(list) do
     for i <- 0..(length(list) - 1), do: list |> List.delete_at(i)
