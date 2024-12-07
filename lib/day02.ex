@@ -4,6 +4,7 @@ defmodule Day02 do
   """
 
   @type level :: pos_integer()
+  @type distance :: integer()
   @type report :: [level()]
 
   @spec parse_line(String.t()) :: report()
@@ -22,44 +23,43 @@ defmodule Day02 do
     |> Enum.map(&parse_line/1)
   end
 
-  @spec monotonically_increasing?(report()) :: boolean()
-  def monotonically_increasing?(report) do
-    ascending_values = Enum.sort(report, :asc)
-    unique_ascending_values = Enum.uniq(ascending_values)
-    ascending_values == unique_ascending_values and ascending_values == report
-  end
-
-  @spec monotonically_decreasing?(report()) :: boolean()
-  def monotonically_decreasing?(report) do
-    descending_values = Enum.sort(report, :desc)
-    unique_descending_values = Enum.uniq(descending_values)
-    descending_values == unique_descending_values and descending_values == report
-  end
-
-  @spec monotonically_advancing?(report()) :: boolean()
-  def monotonically_advancing?(report) do
-    monotonically_increasing?(report) or monotonically_decreasing?(report)
-  end
-
-  @spec advancing_with_small_steps?(report()) :: boolean()
-  def advancing_with_small_steps?([first | rest]) do
-    Enum.reduce(rest, {first, []}, fn current_level, {previous_level, distances} ->
-      {current_level, [abs(previous_level - current_level) | distances]}
-    end)
-    |> then(fn {_last_level, distances} -> distances end)
-    # NOTE: We can also check for `distance >= 1` and that eliminates the need for checking
-    # for monotonical advancement of the list.
-    |> Enum.all?(fn distance -> distance <= 3 end)
-  end
-
   @spec all_variants_with_one_element_removed(report()) :: [report()]
   def all_variants_with_one_element_removed(list) do
     for i <- 0..(length(list) - 1), do: list |> List.delete_at(i)
   end
 
+  @spec sign(integer()) :: :zero | :minus | :plus
+  def sign(0), do: :zero
+  def sign(i) when i > 0, do: :plus
+  def sign(i) when i < 0, do: :minus
+
+  @spec distances(report()) :: [distance()]
+  def distances([first | rest]) do
+    rest
+    |> Enum.reduce({first, []}, fn current_level, {previous_level, distances} ->
+      {current_level, [current_level - previous_level | distances]}
+    end)
+    |> then(fn {_last_level, distances} -> Enum.reverse(distances) end)
+  end
+
+  @spec same_signs?([distance()]) :: boolean()
+  def same_signs?(list) do
+    list
+    |> Enum.map(&sign/1)
+    |> Enum.uniq()
+    |> length()
+    |> Kernel.==(1)
+  end
+
   @spec safe?(report()) :: boolean()
   def safe?(report) do
-    monotonically_advancing?(report) and advancing_with_small_steps?(report)
+    distances = distances(report)
+    monotonical? = same_signs?(distances)
+
+    safely_advancing? =
+      distances |> Enum.map(&abs/1) |> Enum.all?(fn distance -> distance <= 3 end)
+
+    monotonical? and safely_advancing?
   end
 
   @spec safe_with_a_dampener?(report()) :: boolean()
@@ -79,6 +79,7 @@ defmodule Day02 do
     |> Enum.count(&safe?/1)
   end
 
+  @spec part_2(String.t()) :: non_neg_integer()
   def part_2(input \\ Aoc.input(2)) do
     input
     |> Aoc.parse_lines_of_integers()
