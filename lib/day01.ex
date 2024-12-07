@@ -15,7 +15,7 @@ defmodule Day01 do
   @spec similarity_score(pairs()) :: similarity()
   def similarity_score(input) do
     [left, right] = Enum.zip_with(input, &Enum.frequencies/1) |> dbg()
-    Enum.reduce(left, 0, fn {k, v}, sum -> sum + k * v * Map.get(right, k, 0) end) |> dbg()
+    Enum.reduce(left, 0, fn {k, v}, sum -> sum + k * v * Map.get(right, k, 0) end)
   end
 
   @doc ~S"""
